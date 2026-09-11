@@ -21,3 +21,16 @@ source page's `SERIES` definition:
 
 Each series' 5 files are levels 1 (lowest charge) through 5 (full),
 sharing the single empty-state icon.
+
+## Metadata stripping
+
+The source data URIs carried two nonstandard ancillary PNG chunks —
+`caBX` (a 5758-byte C2PA content-credentials manifest) and `deBG` —
+wrapped around ~394 bytes of actual image data. Spec-compliant decoders
+skip unknown ancillary chunks, but stricter/embedded ones may reject the
+file outright, so these chunks are removed here: only `IHDR`, `IDAT` and
+`IEND` remain. Decoded pixel arrays were compared before and after and
+are identical for all 21 files; the set went from 130,363 to 8,605 bytes.
+
+`source-icon-uris.json` still holds the untouched originals if the
+C2PA provenance manifest is ever needed.
