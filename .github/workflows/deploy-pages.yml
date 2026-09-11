@@ -27,11 +27,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # enablement:true creates the Pages site on first run, so no manual
-      # repo-settings step is needed to bootstrap this.
+      # Requires Pages to already exist with Source = "GitHub Actions"
+      # (Settings > Pages). Creating the site from here is not possible:
+      # the Pages create API needs administration:write, which GITHUB_TOKEN
+      # cannot hold, so configure-pages' enablement:true always 403s.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
