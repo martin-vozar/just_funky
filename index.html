@@ -80,6 +80,23 @@
   }
   .c-off{color:var(--off)} .c-dfs{color:var(--dfs)}
   .c-dff{color:var(--dff)} .c-fort{color:var(--fort)}
+  .chain .marks{
+    grid-column:1 / -1;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:13px 18px;display:flex;flex-wrap:wrap;
+    align-items:center;gap:9px 14px;
+  }
+  .mk-label{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-faint);
+  }
+  .mk-list{display:flex;flex-wrap:wrap;gap:7px}
+  .mk{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--mono);font-size:12px;color:var(--ink-dim);
+    border:1px solid var(--line);border-radius:999px;padding:3px 11px 3px 8px;
+  }
+  .mk i{width:8px;height:8px;border-radius:2px;flex:none;display:block}
+  .mk i.unset{background:repeating-linear-gradient(45deg,#3a444c 0 3px,#2a3238 3px 6px)}
   .aside{
     margin:0;color:var(--ink-faint);font-size:14px;font-style:italic;
     border-left:2px solid var(--line);padding-left:14px;
@@ -223,14 +240,8 @@
 
   <!-- ========== LOGIKA ========== -->
   <section>
-    <div class="sec-head">
-      <h2>Logika</h2>
-      <p class="lead">Dve premisy, jeden záver. Účel dediny určuje farbu, stav určuje nabitie batérky.</p>
-    </div>
-
     <div class="chain">
       <div class="node">
-        <span class="tag">Premisa 1 · Účel</span>
         <span class="name">Manuálna skupina</span>
         <div class="purpose-chips">
           <span class="chip c-off">OFF</span>
@@ -238,20 +249,18 @@
           <span class="chip c-dff">DFF</span>
           <span class="chip c-fort">FORT</span>
         </div>
-        <span class="detail">→ farba ikony</span>
+        <span class="detail">→ farba</span>
       </div>
 
       <div class="node">
-        <span class="tag">Premisa 2 · Stav</span>
         <span class="name">Obyvateľstvo → Jednotky</span>
         <span class="detail">&gt; 4 000 … &gt; 19 500</span>
-        <span class="detail">→ nabitie batérky</span>
+        <span class="detail">→ nabitie batérky, 0/5 → 5/5</span>
       </div>
 
-      <div class="node concl">
-        <span class="tag">Záver · Stupeň na mape</span>
-        <span class="name">0/5 → 5/5</span>
-        <span class="detail">Batérka na dedine: farba = účel, nabitie = stav.</span>
+      <div class="marks">
+        <span class="mk-label">Ďalšie značky</span>
+        <div class="mk-list" id="marks"></div>
       </div>
     </div>
 
@@ -392,7 +401,7 @@ const UNIT = { spear:'Kopijník', sword:'Šermiar', axe:'Sekerník', spy:'Zved',
   knight:'Paladin', snob:'Šľachtic', militia:'Domobrana' };
 
 const FLAGS = [
-  { nm:'!!! STIAHNI', tag:'tvoje', sym:'spear', rgb:null,
+  { nm:'!!! STIAHNI', tag:'Leniter', sym:'spear', rgb:null,
     why:'Podpora, ktorú treba stiahnuť: sedí v cudzej dedine, ide na ňu útok a nie je jej tam dosť na udržanie.',
     tree:{ op:'A', items:[
       'Podporné jednotky &gt; 200',
@@ -406,7 +415,7 @@ const FLAGS = [
       ]}
     ]}
   },
-  { nm:'! x mozno au', tag:'tvoje', sym:'sword', rgb:null,
+  { nm:'! x mozno au', tag:'Leniter', sym:'sword', rgb:null,
     why:'Ide na ňu útok, podpory je málo, ale doma ešte niečo stojí. Stačí jedna z tých štyroch jednotiek.',
     tree:{ op:'A', items:[
       'Má prichádzajúce útoky &gt;= 1',
@@ -544,6 +553,18 @@ function branch(node, depth){
     }
   }
   return box;
+}
+
+/* ---- pás značiek hore ---- */
+const marksEl = document.getElementById('marks');
+for (const f of FLAGS){
+  const m = document.createElement('span');
+  m.className = 'mk';
+  const i = document.createElement('i');
+  if (f.rgb) i.style.background = `rgb(${f.rgb.join(', ')})`;
+  else i.className = 'unset';
+  m.append(i, document.createTextNode(f.nm));
+  marksEl.append(m);
 }
 
 /* ---- príznaky ---- */
