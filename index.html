@@ -85,20 +85,6 @@
     border-left:2px solid var(--line);padding-left:14px;
   }
 
-  /* ---- "what changed" callout ---- */
-  .changed{
-    background:var(--panel);border:1px solid var(--line);
-    border-left:3px solid var(--dff);
-    border-radius:0 12px 12px 0;padding:18px 20px;
-    display:flex;flex-direction:column;gap:10px;
-  }
-  .changed h3{
-    margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;
-    text-transform:uppercase;color:var(--dff);font-weight:500;
-  }
-  .changed ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px;color:var(--ink-dim)}
-  .changed li b{color:var(--ink);font-weight:600}
-
   /* ---- tables ---- */
   .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
   table{width:100%;border-collapse:collapse;font-size:14px}
@@ -118,6 +104,9 @@
   td.ic{text-align:center;width:64px}
   td.ic img{width:30px;height:30px;image-rendering:pixelated;vertical-align:middle}
   th.ser{text-align:center}
+  .dgrp{background:rgba(255,255,255,.028)}
+  .dgrp.l{border-left:1px solid var(--line)}
+  .dgrp.r{border-right:1px solid var(--line)}
   th.ser span{display:block;font-size:10.5px}
   th.ser .dot{
     display:inline-block;width:8px;height:8px;border-radius:2px;margin-bottom:5px;
@@ -132,17 +121,17 @@
     text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:8px;
   }
   .series h3 .sw{width:10px;height:10px;border-radius:2px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:9px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:7px}
   .icon{
-    background:var(--panel);border:1px solid var(--line);border-radius:10px;
-    padding:13px 10px;display:flex;flex-direction:column;align-items:center;gap:9px;
+    background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:10px 7px;display:flex;flex-direction:column;align-items:center;gap:7px;
     cursor:pointer;text-align:center;font:inherit;color:inherit;
     transition:border-color .12s;
   }
   .icon:hover{border-color:var(--ink-faint)}
   .icon:focus-visible{outline:2px solid var(--dff);outline-offset:2px}
-  .icon img{width:48px;height:48px;image-rendering:pixelated}
-  .icon .fn{font-family:var(--mono);font-size:11px;color:var(--ink-faint);word-break:break-all}
+  .icon img{width:38px;height:38px;image-rendering:pixelated}
+  .icon .fn{font-family:var(--mono);font-size:10px;color:var(--ink-faint);word-break:break-all}
 
   /* ---- watch-outs ---- */
   .watch{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
@@ -178,9 +167,7 @@
     font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
     padding:2px 8px;border-radius:999px;border:1px solid currentColor;line-height:1.6;
   }
-  .badge.s-own{color:var(--dff)}
-  .badge.s-doc{color:var(--ink-faint)}
-  .badge.s-new{color:var(--dfs)}
+  .badge{color:var(--ink-faint)}
   .grp-head .sym-tag{
     margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-faint);
     border:1px solid var(--line);border-radius:999px;padding:3px 10px;white-space:nowrap;
@@ -238,7 +225,7 @@
   <section>
     <div class="sec-head">
       <h2>Logika</h2>
-      <p class="lead">Dve premisy, jeden záver. Účel dediny určuje farbu, stav určuje počet prúžkov.</p>
+      <p class="lead">Dve premisy, jeden záver. Účel dediny určuje farbu, stav určuje nabitie batérky.</p>
     </div>
 
     <div class="chain">
@@ -258,27 +245,18 @@
         <span class="tag">Premisa 2 · Stav</span>
         <span class="name">Obyvateľstvo → Jednotky</span>
         <span class="detail">&gt; 4 000 … &gt; 19 500</span>
-        <span class="detail">→ počet prúžkov</span>
+        <span class="detail">→ nabitie batérky</span>
       </div>
 
       <div class="node concl">
         <span class="tag">Záver · Stupeň na mape</span>
         <span class="name">0/5 → 5/5</span>
-        <span class="detail">Ikona batérie na dedine: farba = účel, prúžky = naplnenosť.</span>
+        <span class="detail">Batérka na dedine: farba = účel, nabitie = stav.</span>
       </div>
     </div>
 
     <p class="aside">Mimo rovnice ostáva podpora, budovy aj zloženie — výmena 2 000 kopijí za 300 ŤK dedinou nepohne.</p>
 
-    <div class="changed">
-      <h3>Čo sa oproti staršiemu dokumentu zmenilo</h3>
-      <ul>
-        <li><b>4 účely namiesto 3.</b> Pribudol <span class="c-fort">FORT</span>. Pôvodné <em>DEFF</em> je dnes <span class="c-dfs">DFS</span>, pôvodné <em>FAST</em> je <span class="c-dff">DFF</span> — modrá aj zelená ostali.</li>
-        <li><b>Stupeň sa už nečíta z tmavosti farby.</b> Starý rozpis mal 15 odtieňov, kde tmavšia = plnšia. Teraz je farba v rámci účelu konštantná a stupeň hovorí počet prúžkov.</li>
-        <li><b>0/5 je jedna zdieľaná ikona</b> namiesto troch takmer bielych odtieňov.</li>
-        <li><b>Prahy sa nemenili.</b> Pätiny z 20 000 platia ďalej a sú rovnaké pre všetky účely.</li>
-      </ul>
-    </div>
   </section>
 
   <!-- ========== STUPNE ========== -->
@@ -295,8 +273,8 @@
             <th>St.</th>
             <th>Podmienka · Jednotky</th>
             <th class="ser"><span class="dot" style="background:var(--off)"></span><span class="c-off">OFF</span><span>sekery + ĽK</span></th>
-            <th class="ser"><span class="dot" style="background:var(--dfs)"></span><span class="c-dfs">DFS</span><span>kopije + šerm</span></th>
-            <th class="ser"><span class="dot" style="background:var(--dff)"></span><span class="c-dff">DFF</span><span>kopije + ŤK</span></th>
+            <th class="ser dgrp l"><span class="dot" style="background:var(--dfs)"></span><span class="c-dfs">DFS</span><span>kopije + šerm</span></th>
+            <th class="ser dgrp r"><span class="dot" style="background:var(--dff)"></span><span class="c-dff">DFF</span><span>kopije + ŤK</span></th>
             <th class="ser"><span class="dot" style="background:var(--fort)"></span><span class="c-fort">FORT</span><span>—</span></th>
           </tr>
         </thead>
@@ -333,7 +311,7 @@
     <div class="sec-head">
       <h2>Ikony</h2>
       <p class="lead">Klikni na ikonu a skopíruje sa jej priama URL. 18×18 PNG s priehľadnosťou, vykreslené tu
-        zväčšené s <code style="font-family:var(--mono);font-size:13px;color:var(--dff)">image-rendering: pixelated</code>, aby prúžky ostali ostré.</p>
+        zväčšené s <code style="font-family:var(--mono);font-size:13px;color:var(--dff)">image-rendering: pixelated</code>, aby ostala ostrá.</p>
     </div>
     <div id="gallery"></div>
   </section>
@@ -342,16 +320,14 @@
   <section>
     <div class="sec-head">
       <h2>Príznaky</h2>
-      <p class="lead">Skupiny s vlastnou farbou a symbolom mimo škály stupňov. Nevnárajú sa do seba —
-        buď sedia, alebo nie. Vnorené bloky sa vyhodnocujú zvnútra von, presne ako ich kreslí hra.</p>
+      <p class="lead">Vlastná farba a vstavaný symbol, mimo škály nabitia. Buď sedia, alebo nie.</p>
     </div>
     <div id="flags" style="display:flex;flex-direction:column;gap:13px"></div>
 
     <div class="note">
-      <b>Pozor na <code style="font-family:var(--mono);font-size:12px">!!! STIAHNI</code>.</b>
-      Vnútorné A(<em>Opevnenie &lt; 12</em>, <em>Podporné jednotky ≤ 10 000</em>) je podmnožinou vetvy
-      <em>≤ 15 000</em> — celá ALEBO vetva sa teda správa presne ako <em>≤ 15 000</em> a múr o ničom nerozhoduje.
-      Ak má múr niečo meniť, horný prah patrí nižšie alebo preč.
+      <b>Pozor na <code style="font-family:var(--mono);font-size:12px">!!! STIAHNI</code>:</b>
+      vnútorné A je podmnožinou vetvy <em>≤ 15 000</em>, takže múr o ničom nerozhoduje.
+      Ak má rozhodovať, horný prah patrí nižšie alebo preč.
     </div>
   </section>
 
@@ -411,9 +387,12 @@ const DEGREES = [
   { st:'0/5', cond:null       },
 ];
 
+const UNIT = { spear:'Kopijník', sword:'Šermiar', axe:'Sekerník', spy:'Zved',
+  light:'Ľahká jazda', heavy:'Ťažká jazda', ram:'Baranidlo', catapult:'Katapult',
+  knight:'Paladin', snob:'Šľachtic', militia:'Domobrana' };
+
 const FLAGS = [
-  /* ---------- tvoje, odpísané zo screenshotov ---------- */
-  { nm:'!!! STIAHNI', src:'tvoje', sym:'spear', rgb:null,
+  { nm:'!!! STIAHNI', tag:'tvoje', sym:'spear', rgb:null,
     why:'Podpora, ktorú treba stiahnuť: sedí v cudzej dedine, ide na ňu útok a nie je jej tam dosť na udržanie.',
     tree:{ op:'A', items:[
       'Podporné jednotky &gt; 200',
@@ -427,7 +406,7 @@ const FLAGS = [
       ]}
     ]}
   },
-  { nm:'! x mozno au', src:'tvoje', sym:'sword', rgb:null,
+  { nm:'! x mozno au', tag:'tvoje', sym:'sword', rgb:null,
     why:'Ide na ňu útok, podpory je málo, ale doma ešte niečo stojí. Stačí jedna z tých štyroch jednotiek.',
     tree:{ op:'A', items:[
       'Má prichádzajúce útoky &gt;= 1',
@@ -440,63 +419,25 @@ const FLAGS = [
       ]}
     ]}
   },
-
-  /* ---------- zo staršieho dokumentu ---------- */
-  { nm:'!off doma', src:'dokument', sym:'axe', rgb:[232,185,63],
-    why:'Hneď použiteľný nuke.',
+  { nm:'svrbí ma prst', tag:null, sym:'axe', rgb:[232,185,63],
+    why:'Nuke je doma a nabitý. Hneď použiteľný.',
     tree:{ op:'A', items:[
       'Manuálna skupina: OFF',
       'Jednotky &gt; 16 000',
       'Jednotky: Sekerník (doma) &gt; 4 800'
     ]}
   },
-  { nm:'!off preč', src:'dokument', sym:'ram', rgb:[140,58,58],
-    why:'Nuke je vonku.',
-    tree:{ op:'A', items:[
-      'Manuálna skupina: OFF',
-      'Jednotky &gt; 16 000',
-      'Jednotky: Sekerník (doma) &lt; 1 000'
-    ]}
-  },
-  { nm:'!holá dedina', src:'dokument', sym:'militia', rgb:[192,57,43],
-    why:'Bez vojska aj bez podpory. Odkedy sa deff rozpadol na DFS a DFF, musí byť vrchná podmienka ALEBO.',
-    tree:{ op:'A', items:[
-      { op:'ALEBO', items:['Manuálna skupina: DFS','Manuálna skupina: DFF'] },
-      'Jednotky: Kopijník (doma) &lt; 2 000',
-      'Podpora &lt; 3 000'
-    ]}
-  },
-  { nm:'!cudzia podpora', src:'dokument', sym:'spy', rgb:[142,107,196],
-    why:'Tmavé je požičané.',
-    tree:{ op:'A', items:['Podporné jednotky &gt; 8 000'] }
-  },
-  { nm:'!ŤK doma', src:'dokument', sym:'heavy', rgb:[47,166,166],
-    why:'Vieš snipovať.',
+  { nm:'rHC', tag:'Leniter', sym:'heavy', rgb:[47,166,166],
+    why:'Ťažká jazda doma — vieš snipovať.',
     tree:{ op:'A', items:['Jednotky: Ťažká jazda (doma) &gt; 600'] }
   },
-  { nm:'!veľa ĽK', src:'dokument', sym:'light', rgb:[201,162,39],
-    why:'Off je nadhodnotený.',
-    tree:{ op:'A', items:['Manuálna skupina: OFF','Nosnosť &gt; 200 000'] }
-  },
-
-  /* ---------- návrhy ---------- */
-  { nm:'!paladin', src:'návrh', sym:'knight', rgb:[120,190,255],
-    why:'Paladin doma — vieš, kde sedí zbraň a bonus, bez otvárania dediny.',
+  { nm:'paladin', tag:null, sym:'knight', rgb:[120,190,255],
+    why:'Kde sedí zbraň a bonus, bez otvárania dediny.',
     tree:{ op:'A', items:['Jednotky: Paladin (doma) &gt;= 1'] }
   },
-  { nm:'!šľachtic', src:'návrh', sym:'snob', rgb:[183,124,255],
-    why:'Odkiaľ sa dá zaberať. Každý šľachtic je aj 100 obyvateľstva navyše.',
+  { nm:'šľachtic', tag:null, sym:'snob', rgb:[183,124,255],
+    why:'Odkiaľ sa dá zaberať. Každý je aj 100 obyvateľstva navyše.',
     tree:{ op:'A', items:['Jednotky: Šľachtic (doma) &gt;= 1'] }
-  },
-  { nm:'!neudrží', src:'návrh', sym:'catapult', rgb:[224,112,92],
-    why:'Ide na ňu útok a buď nemá podporu, alebo nemá múr. Jedno z toho stačí.',
-    tree:{ op:'A', items:[
-      'Má prichádzajúce útoky &gt;= 1',
-      { op:'ALEBO', items:[
-        'Podpora &lt; 5 000',
-        'Obsahuje budovu: Opevnenie &lt; stupeň 15'
-      ]}
-    ]}
   },
 ];
 
@@ -527,7 +468,7 @@ for (const d of DEGREES){
 
   for (const s of SERIES){
     const td = document.createElement('td');
-    td.className = 'ic';
+    td.className = 'ic' + (s.key === 'deff-slow' ? ' dgrp l' : s.key === 'deff-fast' ? ' dgrp r' : '');
     const img = document.createElement('img');
     const file = zero ? 'shared-empty.png' : `${s.key}-${d.st[0]}.png`;
     img.src = BASE + file;
@@ -606,7 +547,6 @@ function branch(node, depth){
 }
 
 /* ---- príznaky ---- */
-const SRC_LABEL = { 'tvoje':'tvoje', 'dokument':'z dokumentu', 'návrh':'návrh' };
 const flagsEl = document.getElementById('flags');
 
 for (const f of FLAGS){
@@ -626,15 +566,20 @@ for (const f of FLAGS){
   nm.textContent = f.nm;
   if (rgb) nm.style.color = rgb;
 
-  const badge = document.createElement('span');
-  badge.className = 'badge s-' + (f.src === 'tvoje' ? 'own' : f.src === 'návrh' ? 'new' : 'doc');
-  badge.textContent = SRC_LABEL[f.src];
+  head.append(sw, nm);
+
+  if (f.tag){
+    const badge = document.createElement('span');
+    badge.className = 'badge';
+    badge.textContent = f.tag;
+    head.append(badge);
+  }
 
   const tag = document.createElement('span');
   tag.className = 'sym-tag';
-  tag.textContent = rgb ? `${f.sym} · ${f.rgb.join(', ')}` : `${f.sym} · farbu máš`;
-
-  head.append(sw, nm, badge, tag);
+  tag.textContent = rgb ? `${UNIT[f.sym]} · ${f.rgb.join(', ')}` : UNIT[f.sym];
+  tag.title = `/graphic/unit_map/${f.sym}.png`;
+  head.append(tag);
 
   const why = document.createElement('p');
   why.className = 'grp-why';
