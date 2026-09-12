@@ -292,9 +292,7 @@
     </div>
 
     <div class="note">
-      <b>FORT nie je v zdrojovom dokumente.</b> Ikony preň existujú a prahy sú zjavne tie isté, ale definíciu manuálnej skupiny
-      ani prípadnú odlišnú podmienku zdroj neuvádza — doplň ju podľa toho, ako FORT na serveri reálne používate.
-      Nedopĺňal som ju odhadom.
+      <b>FORT má vlastnú stupnicu.</b> Tá sa sem nepíše — je tajná.
     </div>
   </section>
 
@@ -428,7 +426,7 @@ const FLAGS = [
       ]}
     ]}
   },
-  { nm:'svrbí ma prst', tag:null, sym:'axe', rgb:[232,185,63],
+  { nm:'svrbí ma prst', tag:'Leniter', sym:'axe', rgb:[232,185,63],
     why:'Nuke je doma a nabitý. Hneď použiteľný.',
     tree:{ op:'A', items:[
       'Manuálna skupina: OFF',
@@ -441,8 +439,8 @@ const FLAGS = [
     tree:{ op:'A', items:['Jednotky: Ťažká jazda (doma) &gt; 600'] }
   },
   { nm:'paladin', tag:null, sym:'knight', rgb:[120,190,255],
-    why:'Kde sedí zbraň a bonus, bez otvárania dediny.',
-    tree:{ op:'A', items:['Jednotky: Paladin (doma) &gt;= 1'] }
+    why:'Paladin v dedine, nie iba doma — ráta sa aj ten, čo prišiel s podporou. Zbraň a bonus na prvý pohľad, a zároveň prehľad rýchleho deffu.',
+    tree:{ op:'A', items:['Jednotky: Paladin (v dedine) &gt;= 1'] }
   },
   { nm:'šľachtic', tag:null, sym:'snob', rgb:[183,124,255],
     why:'Odkiaľ sa dá zaberať. Každý je aj 100 obyvateľstva navyše.',
