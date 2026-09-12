@@ -176,6 +176,71 @@
   }
   .note b{color:var(--ink-dim);font-weight:600}
 
+  /* ---- platform matrix ---- */
+  .matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:620px){ .matrix{grid-template-columns:1fr} }
+  .cell{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:15px 17px;display:flex;flex-direction:column;gap:7px;
+  }
+  .cell.yes{border-color:#2f5a48}
+  .cell.no{border-color:#5c3a36}
+  .cell .what{font-weight:600;font-size:15px}
+  .cell .verdict{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase}
+  .cell.yes .verdict{color:var(--dff)}
+  .cell.no .verdict{color:#e2705c}
+  .cell p{margin:0;font-size:13.5px;color:var(--ink-dim)}
+
+  /* ---- symbol list ---- */
+  .symbols{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+  .sym{
+    background:var(--panel);border:1px solid var(--line);border-radius:9px;
+    padding:10px 13px;display:flex;flex-direction:column;gap:2px;
+  }
+  .sym .u{font-weight:600;font-size:14px}
+  .sym .p{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);word-break:break-all}
+  .sym.confirmed{border-color:#3a5a4e}
+  .sym.confirmed .p{color:var(--dff)}
+
+  /* ---- logic tree ---- */
+  .grp-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:13px;
+    overflow:hidden;
+  }
+  .grp-head{
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+    padding:14px 17px;border-bottom:1px solid var(--line);
+  }
+  .grp-head .sw{width:14px;height:14px;border-radius:3px;flex:none}
+  .grp-head .nm{font-family:var(--mono);font-size:15px;font-weight:500}
+  .grp-head .sym-tag{
+    margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-faint);
+    border:1px solid var(--line);border-radius:999px;padding:3px 10px;white-space:nowrap;
+  }
+  .grp-why{padding:12px 17px 0;color:var(--ink-dim);font-size:14px;margin:0}
+  .tree{padding:14px 17px 17px}
+  .branch{
+    border:1px solid var(--line);border-radius:10px;padding:11px 12px 12px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .branch.d0{background:var(--panel-2)}
+  .branch.d1{background:rgba(76,146,255,.075);border-color:rgba(76,146,255,.3)}
+  .branch.d2{background:rgba(183,124,255,.075);border-color:rgba(183,124,255,.3)}
+  .op{
+    align-self:flex-end;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-faint);
+    display:flex;align-items:center;gap:7px;
+  }
+  .op b{
+    color:var(--ink);font-weight:500;background:var(--bg);
+    border:1px solid var(--line);border-radius:5px;padding:2px 9px;letter-spacing:.06em;
+  }
+  .leaf{
+    background:var(--bg);border:1px solid var(--line-soft);border-radius:7px;
+    padding:9px 12px;font-family:var(--mono);font-size:12.5px;color:var(--ink);
+  }
+  .leaf em{font-style:italic;color:var(--ink-faint)}
+
   footer{
     border-top:1px solid var(--line);padding-top:18px;
     color:var(--ink-faint);font-size:13px;display:flex;flex-direction:column;gap:6px;
@@ -290,6 +355,8 @@
       <div class="row"><dt>Zadávaj len minimá</dt><dd>Stupne sa do seba vnárajú a poradie vykresľovania <em>0 → 5</em> sa o zvyšok postará. Horný prah nikde nezadávaj.</dd></div>
       <div class="row"><dt>Postup</dt><dd>Nahoď stĺpec <em>OFF</em>, over si na hotovej dedine, že padne do 5/5, a až potom prepíš zvyšné tri.</dd></div>
       <div class="row"><dt>Prečo to funguje</dt><dd>Dedina spadne do každej skupiny, ktorej prah prekročí. Na mape ju prekryje tá najvyššia, pretože sa kreslí posledná.</dd></div>
+      <div class="row"><dt>Farba a symbol</dt><dd>Pri skupine klikni na farebný štvorček → <em>Upraviť farbu</em>. Zadaj <em>Červená / Zelená / Modrá</em> alebo vyber z palety. Symbol nastavíš kliknutím na ikonu pod poľom <em>Symbol-URL</em>. <em>Uložiť</em>.</dd></div>
+      <div class="row"><dt>Vnorené podmienky</dt><dd>V <em>Kombinácie filtrov</em> prepni <em>Kombinovať pomocou</em> na <em>A</em> alebo <em>ALEBO</em>. <em>Prídať novú kombináciu</em> vytvorí vnorený blok — ten sa vyhodnotí ako celok a do nadradeného vstúpi ako jedna podmienka.</dd></div>
     </div>
   </section>
 
@@ -303,6 +370,50 @@
     <div id="gallery"></div>
   </section>
 
+  <!-- ========== VSTAVANÉ SYMBOLY ========== -->
+  <section>
+    <div class="sec-head">
+      <h2>Vstavané symboly</h2>
+      <p class="lead">V dialógu <em>Upraviť farbu</em> je pod poľom <em>Symbol-URL</em> rad ikon. Klikni na ktorúkoľvek
+        a pole sa vyplní samo — netreba nič písať ani nikde hostovať.</p>
+    </div>
+
+    <div class="matrix">
+      <div class="cell yes">
+        <span class="verdict">Všade</span>
+        <span class="what">Farba skupiny</span>
+        <p>Natívna vlastnosť skupiny. Prehliadač aj appka.</p>
+      </div>
+      <div class="cell yes">
+        <span class="verdict">Všade</span>
+        <span class="what">Vstavaný symbol</span>
+        <p>Obrázok z vlastného servera hry (<code style="font-family:var(--mono);font-size:12px">/graphic/…</code>). Prehliadač aj appka.</p>
+      </div>
+      <div class="cell no">
+        <span class="verdict">Len prehliadač</span>
+        <span class="what">Vlastný obrázok z cudzieho hostingu</span>
+        <p>Na mape v mobilnej appke sa nevykreslí — v nastaveniach ho pritom vidno.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>Preto batériové ikony fungujú len v prehliadači.</b> Sú hostované mimo hry, a mapa v appke cudzie obrázky
+      nenačíta. Dôsledok pre návrh: <b>stupeň 0/5 → 5/5 nes farbou</b>, nie ikonou — farba prejde všade.
+      Batérie ber ako nadstavbu pre prehliadač. Príznaky rieš vstavaným symbolom, nech ich vidíš aj na telefóne.
+    </div>
+
+    <div class="sec-head" style="margin-top:6px">
+      <h2 style="font-size:19px">Čo je k dispozícii</h2>
+      <p class="lead">Rad má 11 ikon, čo presne sedí na počet jednotiek na serveri bez lukostrelcov.</p>
+    </div>
+    <div class="symbols" id="symbols"></div>
+    <div class="note">
+      Z obrázku je potvrdená jediná cesta — <b>/graphic/unit_map/snob.png</b>. Zvyšné sú odvodené z interných názvov
+      jednotiek a sedia na počet ikon, ale neoveroval som ich. Netreba to riešiť: klikni na ikonu v dialógu
+      a cestu doplní hra sama.
+    </div>
+  </section>
+
   <!-- ========== PRÍZNAKY ========== -->
   <section>
     <div class="sec-head">
@@ -310,6 +421,24 @@
       <p class="lead">Šesť plochých skupín s vlastnou farbou mimo škály stupňov. Nevnárajú sa — buď sedia, alebo nie.</p>
     </div>
     <div class="signs" id="signs"></div>
+  </section>
+
+  <!-- ========== NÁVRHY ========== -->
+  <section>
+    <div class="sec-head">
+      <h2>Návrhy skupín</h2>
+      <p class="lead">Štyri, ktoré stoja za nastavenie. Vnorené bloky sa vyhodnocujú zvnútra von —
+        modrý je vnorený v sivom, fialový v modrom, presne ako ich kreslí hra.</p>
+    </div>
+    <div id="proposals" style="display:flex;flex-direction:column;gap:14px"></div>
+
+    <div class="note">
+      <b>Vzor, ktorý už používaš.</b> <code style="font-family:var(--mono);font-size:12px">!!! STIAHNI</code> je postavený
+      rovnako: A(<em>Podporné jednotky &gt; 200</em>, <em>Má prichádzajúce útoky ≥ 1</em>,
+      ALEBO(<em>Podporné jednotky ≤ 15 000</em>, A(<em>Opevnenie &lt; 12</em>, <em>Podporné jednotky ≤ 10 000</em>))).
+      Vnútorné A je pritom podmnožinou vetvy <em>≤ 15 000</em> — celá ALEBO vetva sa správa ako <em>≤ 15 000</em>.
+      Ak to tak nemá byť, horný prah patrí preč alebo nižšie.
+    </div>
   </section>
 
   <!-- ========== POZOR ========== -->
@@ -375,6 +504,59 @@ const SIGNS = [
   { nm:'!cudzia podpora', cond:'Podporné jednotky > 8 000',                                             why:'tmavé je požičané',         rgb:[142,107,196] },
   { nm:'!ŤK doma',        cond:'Ťažká kavaléria <em>doma</em> > 600',                                   why:'vieš snipovať',             rgb:[47,166,166]  },
   { nm:'!veľa ĽK',        cond:'OFF ∧ Nosnosť > 200 000',                                               why:'off je nadhodnotený',       rgb:[201,162,39]  },
+];
+
+/* 11 symbolov = 11 jednotiek na serveri bez lukostrelcov.
+   Potvrdená je len cesta k snob.png (vidno ju na screenshote). */
+const SYMBOLS = [
+  { u:'Kopijník',          f:'spear'    },
+  { u:'Šermiar',           f:'sword'    },
+  { u:'Sekerník',          f:'axe'      },
+  { u:'Zved',              f:'spy'      },
+  { u:'Ľahká kavaléria',   f:'light'    },
+  { u:'Ťažká kavaléria',   f:'heavy'    },
+  { u:'Baranidlo',         f:'ram'      },
+  { u:'Katapult',          f:'catapult' },
+  { u:'Paladin',           f:'knight'   },
+  { u:'Šľachtic',          f:'snob', confirmed:true },
+  { u:'Domobrana',         f:'militia'  },
+];
+
+const PROPOSALS = [
+  {
+    nm:'!holá', rgb:[192,57,43], sym:'spear',
+    why:'Defka bez vojska aj bez podpory. Odkedy sa DEFF rozpadol na dva účely, musí byť vrchná podmienka ALEBO — inak polovicu dedín minieš.',
+    tree:{ op:'A', items:[
+      { op:'ALEBO', items:['Manuálna skupina: DEFF SLOW','Manuálna skupina: DEFF FAST'] },
+      'Kopije <em>doma</em> &lt; 2 000',
+      'Podpora &lt; 3 000'
+    ]}
+  },
+  {
+    nm:'!nuke doma', rgb:[232,185,63], sym:'axe',
+    why:'Hneď použiteľný off. Plochá podmienka — vnáranie by tu nič nepridalo.',
+    tree:{ op:'A', items:[
+      'Manuálna skupina: OFF',
+      'Jednotky &gt; 16 000',
+      'Sekerník <em>doma</em> &gt; 4 800'
+    ]}
+  },
+  {
+    nm:'!neudrží', rgb:[224,112,92], sym:'ram',
+    why:'Ide na ňu útok a buď nemá podporu, alebo nemá múr. Jedna z tých dvoch stačí — preto ALEBO vnorené do A.',
+    tree:{ op:'A', items:[
+      'Má prichádzajúce útoky &gt;= 1',
+      { op:'ALEBO', items:[
+        'Podpora &lt; 5 000',
+        'Obsahuje budovu: Opevnenie &lt; stupeň 15'
+      ]}
+    ]}
+  },
+  {
+    nm:'!šľachtic', rgb:[142,107,196], sym:'snob',
+    why:'Vidíš, odkiaľ sa dá zaberať, bez otvárania dediny. Jediný symbol, ktorého cestu mám potvrdenú.',
+    tree:{ op:'A', items:[ 'Šľachtic <em>doma</em> &gt;= 1' ]}
+  },
 ];
 
 const toast = document.getElementById('toast');
@@ -454,6 +636,72 @@ for (const g of groups){
   }
   sec.append(h, grid);
   gallery.append(sec);
+}
+
+/* ---- vstavané symboly ---- */
+const symEl = document.getElementById('symbols');
+for (const s of SYMBOLS){
+  const d = document.createElement('div');
+  d.className = 'sym' + (s.confirmed ? ' confirmed' : '');
+  const u = document.createElement('div');
+  u.className = 'u'; u.textContent = s.u;
+  const p = document.createElement('div');
+  p.className = 'p'; p.textContent = `/graphic/unit_map/${s.f}.png`;
+  d.append(u, p);
+  symEl.append(d);
+}
+
+/* ---- logické stromy ---- */
+function branch(node, depth){
+  const box = document.createElement('div');
+  box.className = `branch d${Math.min(depth, 2)}`;
+
+  const op = document.createElement('div');
+  op.className = 'op';
+  op.append(document.createTextNode('Kombinovať pomocou:'));
+  const b = document.createElement('b');
+  b.textContent = node.op;
+  op.append(b);
+  box.append(op);
+
+  for (const item of node.items){
+    if (typeof item === 'string'){
+      const leaf = document.createElement('div');
+      leaf.className = 'leaf';
+      leaf.innerHTML = item;
+      box.append(leaf);
+    } else {
+      box.append(branch(item, depth + 1));
+    }
+  }
+  return box;
+}
+
+const propEl = document.getElementById('proposals');
+for (const p of PROPOSALS){
+  const rgb = `rgb(${p.rgb.join(', ')})`;
+  const card = document.createElement('div');
+  card.className = 'grp-card';
+
+  const head = document.createElement('div');
+  head.className = 'grp-head';
+  const sw = document.createElement('span');
+  sw.className = 'sw'; sw.style.background = rgb;
+  const nm = document.createElement('span');
+  nm.className = 'nm'; nm.textContent = p.nm; nm.style.color = rgb;
+  const tag = document.createElement('span');
+  tag.className = 'sym-tag'; tag.textContent = `symbol: ${p.sym}`;
+  head.append(sw, nm, tag);
+
+  const why = document.createElement('p');
+  why.className = 'grp-why'; why.textContent = p.why;
+
+  const tree = document.createElement('div');
+  tree.className = 'tree';
+  tree.append(branch(p.tree, 0));
+
+  card.append(head, why, tree);
+  propEl.append(card);
 }
 
 /* ---- príznaky ---- */
